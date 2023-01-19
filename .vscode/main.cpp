@@ -8,8 +8,7 @@ using namespace std;
 class Fruit
 {
 public:
-    Fruit(int x, int y);
-    Fruit();
+    Fruit(int current_width, int current_height);
     void setFruitX(int newX);
     void setFruitY(int newY);
     int getFruitX();
@@ -19,14 +18,12 @@ private:
     int fruitY;
 };
 
-
-Fruit::Fruit(int x, int y) : fruitX(x), fruitY(y){
-
-}
-
-Fruit::Fruit(): fruitX(5), fruitY(5)
+Fruit::Fruit(int current_width, int current_height)
 {
-
+    int randX = rand() % (current_width + 1);
+    int randY = rand() % (current_height + 1);
+    fruitX = randX;
+    fruitY = randY;
 }
 
 int Fruit::getFruitX()
@@ -59,6 +56,7 @@ public:
     void setSnakeY(int newY);
     int getSnakeX();
     int getSnakeY();
+    
 private:
     int snakeX;
     int snakeY;
@@ -94,19 +92,19 @@ void Snake::setSnakeY(int newY)
 }
 
 
-class Board : public Snake, public Fruit
+class Board
 {
 public:
     Board(int widthValue, int heightValue);
     Board();
     // Initializes width and height of the board according to arguments
-    // void update();
-    void output();
+    
+    void output(int snakeY, int snakeX, int fruitY, int fruitX);
     void setWidth(int newWidth);
     void setHeight(int newHeight);
     int getWidth();
     int getHeight();
-
+    
 private:
     int width;
     int height;
@@ -116,8 +114,7 @@ private:
 
 Board::Board(int widthValue, int heightValue) : width(widthValue), height(heightValue)
 {
-    width = widthValue;
-    height = heightValue;
+
 }
 
 Board::Board() : width(5), height(5)
@@ -169,27 +166,26 @@ void Board::setHeight(int newHeight)
 }
 
 
-void Board::output()
+void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
 {
     cout << endl;
     for (int i = 0; i < width + 2; i++)
     {
         cout << "#";
     }
-    cout << "\n";
+    cout << endl;
     for (int i = 0; i < height; i++)
     {
-
         for (int j = 0; j < width; j++)
         {
             if (j == 0){
                 cout << "#";
             }
               
-            if (i == getSnakeY() && j == getSnakeX()){
+            if (i == snakeY && j == snakeX){
                 cout << "O";
             }
-            if (i == getFruitY() && j == getFruitX()){
+            if (i == fruitY && j == fruitX){
                 cout << "F";
             }
             cout << " ";
@@ -214,22 +210,19 @@ int main(){
     
     Board board;
     Snake snake;
-    Fruit fruit;
     board.setHeight(current_height);
     board.setWidth(current_width);
-   
+    
     
     while (GAME_STATE == "PLAY"){
-        int randX = rand() % (current_width + 1);
-        int randY = rand() % (current_height + 1);
-        fruit.setFruitX(3);
-        fruit.setFruitY(3);
+        Fruit fruit(current_width, current_height);
+        cout << endl;
         cout << fruit.getFruitX() << endl;
         cout << fruit.getFruitY() << endl;
         cout << snake.getSnakeX() << endl;
         cout << snake.getSnakeY() << endl;
 
-        board.output();
+        board.output(snake.getSnakeY(), snake.getSnakeX(), fruit.getFruitY(), fruit.getFruitX());
         // snake.move();
     }
 
