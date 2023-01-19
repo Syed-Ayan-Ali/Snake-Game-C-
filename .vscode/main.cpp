@@ -8,6 +8,8 @@ using namespace std;
 class Fruit
 {
 public:
+    Fruit(int x, int y);
+    Fruit();
     void setFruitX(int newX);
     void setFruitY(int newY);
     int getFruitX();
@@ -16,6 +18,16 @@ private:
     int fruitX;
     int fruitY;
 };
+
+
+Fruit::Fruit(int x, int y) : fruitX(x), fruitY(y){
+
+}
+
+Fruit::Fruit(): fruitX(5), fruitY(5)
+{
+
+}
 
 int Fruit::getFruitX()
 {
@@ -210,6 +222,8 @@ int main(){
     while (GAME_STATE == "PLAY"){
         int randX = rand() % (current_width + 1);
         int randY = rand() % (current_height + 1);
+        fruit.setFruitX(3);
+        fruit.setFruitY(3);
         cout << fruit.getFruitX() << endl;
         cout << fruit.getFruitY() << endl;
         cout << snake.getSnakeX() << endl;
