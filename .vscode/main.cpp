@@ -8,20 +8,26 @@ using namespace std;
 class Fruit
 {
 public:
-    Fruit(int current_width, int current_height);
+    Fruit();
     void setFruitX(int newX);
     void setFruitY(int newY);
     int getFruitX();
     int getFruitY();
+    int randomiseFruit(int width, int height);
 private:
     int fruitX;
     int fruitY;
 };
 
-Fruit::Fruit(int current_width, int current_height)
-{
-    int randX = rand() % (current_width + 1);
-    int randY = rand() % (current_height + 1);
+Fruit::Fruit()
+{ 
+    fruitX = 1;
+    fruitY = 1;
+}
+
+int Fruit::randomiseFruit(int current_width, int current_height){
+    int randX = rand() % (current_width);
+    int randY = rand() % (current_height);
     fruitX = randX;
     fruitY = randY;
 }
@@ -204,8 +210,8 @@ void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
 
 int main(){
     string GAME_STATE = "PLAY";
-    const int current_width = -9;
-    const int current_height = -8;
+    const int current_width = 9;
+    const int current_height = 5;
     
     Board board;
     Snake snake;
@@ -214,7 +220,8 @@ int main(){
     
     
     while (GAME_STATE == "PLAY"){
-        Fruit fruit(current_width, current_height);
+        Fruit fruit;
+        fruit.randomiseFruit(current_width, current_height);
         cout << endl;
         cout << fruit.getFruitX() << endl;
         cout << fruit.getFruitY() << endl;
