@@ -208,7 +208,13 @@ int main(){
    
     
     while (GAME_STATE == "PLAY"){
-        
+        int randX = rand() % (current_width + 1);
+        int randY = rand() % (current_height + 1);
+        cout << fruit.getFruitX() << endl;
+        cout << fruit.getFruitY() << endl;
+        cout << snake.getSnakeX() << endl;
+        cout << snake.getSnakeY() << endl;
+
         board.output();
         // snake.move();
     }
