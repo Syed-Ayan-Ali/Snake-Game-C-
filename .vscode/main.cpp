@@ -122,7 +122,7 @@ Board::Board(int widthValue, int heightValue) : width(widthValue), height(height
 
 }
 
-Board::Board() : width(5), height(5)
+Board::Board() : width(10), height(10)
 {
 
 }
@@ -174,7 +174,7 @@ void Board::setHeight(int newHeight)
 void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
 {
     cout << endl;
-    for (int i = 0; i < width + 2; i++)
+    for (int i = 0; i < width ; i++)
     {
         cout << "#";
     }
@@ -185,23 +185,20 @@ void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
         {
             if (j == 0){
                 cout << "#";
-            }
-              
-            if (i == snakeY && j == snakeX){
+            } else if (i == snakeY && j == snakeX){
                 cout << "O";
-            }
-            if (i == fruitY && j == fruitX){
+            } else if (i == fruitY && j == fruitX){
                 cout << "F";
-            }
-            cout << " ";
-            if (j == width - 1){
+            } else if(j == width - 1){
                 cout << "#";
+            } else {
+                cout << " ";
             }
         }
         cout << "\n";
         
     }
-    for (int i = 0; i < width + 2; i++)
+    for (int i = 0; i < width; i++)
     {
         cout << "#";
     }
@@ -211,7 +208,7 @@ void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
 int main(){
     string GAME_STATE = "PLAY";
     const int current_width = 9;
-    const int current_height = 5;
+    const int current_height = 6;
     
     Board board;
     Snake snake;
