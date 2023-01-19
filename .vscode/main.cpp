@@ -13,20 +13,20 @@ public:
     void setFruitY(int newY);
     int getFruitX();
     int getFruitY();
-    int randomiseFruit(int width, int height);
+    void randomiseFruit(int width, int height);
     bool checkRandomisation(int randomX, int randomY, int width, int height, int snakeX, int snakeY);
 private:
     int fruitX;
     int fruitY;
 };
 
-Fruit::Fruit()
+Fruit::Fruit() // Default Fruit Constructor
 { 
     fruitX = 1;
     fruitY = 1;
 }
 
-int Fruit::randomiseFruit(int current_width, int current_height){
+void Fruit::randomiseFruit(int current_width, int current_height){
     // Randomises the position of the Fruit
     int randX = rand() % (current_width - 1) + 1;
     int randY = rand() % (current_height - 1) + 1;
@@ -34,6 +34,7 @@ int Fruit::randomiseFruit(int current_width, int current_height){
     fruitY = randY;
 }
 bool Fruit::checkRandomisation(int randomY, int randomX, int current_width, int current_height,int snakeY, int snakeX){
+    // Confirms if the randomised location of fruit is on an empty square
     if (randomY == snakeY && randomX == snakeX){
         return false;
     }
@@ -44,7 +45,6 @@ int Fruit::getFruitX()
 {
     return fruitX;
 }
-
 
 int Fruit::getFruitY()
 {
@@ -80,7 +80,7 @@ Snake::Snake(int x, int y) : snakeX(x), snakeY(y){
 
 }
 
-Snake::Snake(): snakeX(5), snakeY(5)
+Snake::Snake(): snakeX(5), snakeY(5) // Default Snake Constructor; Initializes snake's head position at 5, 5.
 {
 
 }
@@ -130,26 +130,18 @@ Board::Board(int widthValue, int heightValue) : width(widthValue), height(height
 
 }
 
-Board::Board() : width(10), height(10)
+Board::Board() : width(10), height(10) // Default Board Constructor
 {
 
 }
 
-// Equivalent /\
-//            || 
-//            \/
-
-// Board::Board(int widthValue, int heightValue) : width(widthValue), height(heightValue){
-
-// }
-
-int Board::getWidth()
+int Board::getWidth() // Returns the Width
 {
     return width;
 }
 
 
-int Board::getHeight()
+int Board::getHeight() // Returns the Height
 {
     return height;
 }
@@ -191,15 +183,20 @@ void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
     {
         for (int j = 0; j < width; j++)
         {
-            if (j == 0){
+            if (j == 0) 
+            {
                 cout << "#";
-            } else if (i == snakeY && j == snakeX){
+            } else if (i == snakeY && j == snakeX) // print snake's body
+            {
                 cout << "O";
-            } else if (i == fruitY && j == fruitX){
+            } else if (i == fruitY && j == fruitX) // print fruit
+            {
                 cout << "F";
-            } else if(j == width - 1){
+            } else if(j == width - 1)
+            {
                 cout << "#";
-            } else {
+            } else
+            {
                 cout << " ";
             }
         }
@@ -214,8 +211,8 @@ void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
 }
 
 int main(){
-    string GAME_STATE = "PLAY";
-    bool correct_randomisation;
+    string GAME_STATE = "PLAY"; // Variable to store the Game State
+    bool correct_randomisation = true; // To check if randomisation is on an empty square
     const int current_width = 9;
     const int current_height = 6;
     
@@ -226,10 +223,10 @@ int main(){
     
     
     while (GAME_STATE == "PLAY"){
-        Fruit fruit;
-        fruit.randomiseFruit(current_width, current_height);
-        correct_randomisation = fruit.checkRandomisation(fruit.getFruitY(), fruit.getFruitX(), current_width, current_height, snake.getSnakeY(), snake.getSnakeX());
-        while (correct_randomisation == false){
+        Fruit fruit; // Make a fruit
+        fruit.randomiseFruit(current_width, current_height); // Randomise fruits location
+        correct_randomisation = fruit.checkRandomisation(fruit.getFruitY(), fruit.getFruitX(), current_width, current_height, snake.getSnakeY(), snake.getSnakeX()); // To check if randomisation is on an empty square
+        while (correct_randomisation == false){ // For the case where randomisation yet again results in a position over snake's body
             fruit.randomiseFruit(current_width, current_height);
             correct_randomisation = fruit.checkRandomisation(fruit.getFruitY(), fruit.getFruitX(), current_width, current_height, snake.getSnakeY(), snake.getSnakeX());
         }
