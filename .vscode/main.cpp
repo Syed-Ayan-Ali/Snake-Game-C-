@@ -14,6 +14,7 @@ public:
     int getFruitX();
     int getFruitY();
     int randomiseFruit(int width, int height);
+    bool checkRandomisation(int randomX, int randomY, int width, int height, int snakeX, int snakeY);
 private:
     int fruitX;
     int fruitY;
@@ -26,10 +27,17 @@ Fruit::Fruit()
 }
 
 int Fruit::randomiseFruit(int current_width, int current_height){
-    int randX = rand() % (current_width);
-    int randY = rand() % (current_height);
+    // Randomises the position of the Fruit
+    int randX = rand() % (current_width - 1) + 1;
+    int randY = rand() % (current_height - 1) + 1;
     fruitX = randX;
     fruitY = randY;
+}
+bool Fruit::checkRandomisation(int randomY, int randomX, int current_width, int current_height,int snakeY, int snakeX){
+    if (randomY == snakeY && randomX == snakeX){
+        return false;
+    }
+    return true;
 }
 
 int Fruit::getFruitX()
@@ -207,6 +215,7 @@ void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
 
 int main(){
     string GAME_STATE = "PLAY";
+    bool correct_randomisation;
     const int current_width = 9;
     const int current_height = 6;
     
@@ -219,6 +228,11 @@ int main(){
     while (GAME_STATE == "PLAY"){
         Fruit fruit;
         fruit.randomiseFruit(current_width, current_height);
+        correct_randomisation = fruit.checkRandomisation(fruit.getFruitY(), fruit.getFruitX(), current_width, current_height, snake.getSnakeY(), snake.getSnakeX());
+        while (correct_randomisation == false){
+            fruit.randomiseFruit(current_width, current_height);
+            correct_randomisation = fruit.checkRandomisation(fruit.getFruitY(), fruit.getFruitX(), current_width, current_height, snake.getSnakeY(), snake.getSnakeX());
+        }
         cout << endl;
         cout << fruit.getFruitX() << endl;
         cout << fruit.getFruitY() << endl;
