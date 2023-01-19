@@ -91,7 +91,6 @@ void Snake::setSnakeY(int newY)
     snakeY = newY;
 }
 
-
 class Board
 {
 public:
@@ -149,8 +148,8 @@ void Board::setWidth(int newWidth)
     } else 
     {
         cout << "Width can not be negative!";
+        exit(1);
     }
-
 }
 
 void Board::setHeight(int newHeight)
@@ -161,7 +160,7 @@ void Board::setHeight(int newHeight)
     } else 
     {
         cout << "Height can not be negative!";
-        
+        exit(1);
     }
 }
 
@@ -205,8 +204,8 @@ void Board::output(int snakeY, int snakeX, int fruitY, int fruitX)
 
 int main(){
     string GAME_STATE = "PLAY";
-    const int current_width = 10;
-    const int current_height = 8;
+    const int current_width = -9;
+    const int current_height = -8;
     
     Board board;
     Snake snake;
